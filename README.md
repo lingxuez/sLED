@@ -15,7 +15,7 @@ H_0: D=0 versus H_1: D \neq 0
 and to identify the non-zero entries if the null hypothesis is rejected.
 
 See more details in
-> Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
+> Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, with Application to Detecting Schizophrenia Risk Genes", [arXiv:1606.00252](https://arxiv.org/abs/1606.00252).
 
 ## Installation
 This package can be installed through `devtools` in R as follows:
