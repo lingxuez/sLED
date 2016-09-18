@@ -1,6 +1,21 @@
 # sLED: A two-sample test for high-dimensional differential matrices
 
-## sLED
+This is the R Code for
+> Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, with Application to Detecting Schizophrenia Risk Genes", [arXiv:1606.00252](https://arxiv.org/abs/1606.00252).
+
+Pease cite sLED in your publication if it helps your research:
+> @article{zhu2016testing,
+
+  title={Testing High Dimensional Differential Matrices, with Application to Detecting Schizophrenia Risk Genes},
+  
+  author={Zhu, Lingxue and Lei, Jing and Devlin, Bernie and Roeder, Kathryn},
+  
+  journal={arXiv preprint arXiv:1606.00252},
+  
+  year={2016}
+}
+
+## A short introduction to sLED
 Suppose X, Y are p-dimensional random vectors independently coming from two populations.
 Let D be the differential matrix
 
@@ -8,14 +23,12 @@ D = A(Y) - A(X)
 
 where A() is some p-by-p relationship matrix among features in the two populations, including the covariance matrices and correlation matrices. 
 
-sLED is a powerful procedure to test the following hypothesis:
+The goal for sLED is to test the following hypothesis:
 
 H_0: D=0 versus H_1: D \neq 0
 
-and to identify the non-zero entries if the null hypothesis is rejected.
+and to identify the non-zero entries if the null hypothesis is rejected. sLED is more powerfull than many existing two-sample testing procedures for high-dimensional covariance matrices, even when the signal is both weak and sparse.
 
-See more details in
-> Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, with Application to Detecting Schizophrenia Risk Genes", [arXiv:1606.00252](https://arxiv.org/abs/1606.00252).
 
 ## Installation
 This package can be installed through `devtools` in R as follows:
