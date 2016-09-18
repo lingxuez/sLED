@@ -35,7 +35,7 @@ sLEDpermute <- function(Z, n1, n2, adj.beta=0, rho=1000,
   
   ## permutation
   if (verbose) {
-    cat(npermute, "permutation started:\n")
+    cat(npermute, "permutations started:\n")
   }
   
   for (i in 1:npermute) {
@@ -48,7 +48,7 @@ sLEDpermute <- function(Z, n1, n2, adj.beta=0, rho=1000,
   }
   
   if (verbose) {
-    cat(fill=TRUE)
+    cat(npermute, "permutations finished.", fill=TRUE)
   }
   
   return(list(Tn.permute = Tn.permute, Tn.permute.sign = Tn.permute.sign))

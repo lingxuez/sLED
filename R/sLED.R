@@ -51,7 +51,7 @@
 #' @export
 sLED <- function(X, Y, adj.beta=0, rho=1000, 
                  sumabs.seq=0.2, npermute=100, seeds=NULL, verbose=TRUE, niter=20, trace=FALSE,
-                 useMC=TRUE, ncore=2) {
+                 useMC=FALSE, ncore=2) {
   
   n1 <- nrow(X)
   n2 <- nrow(Y)
@@ -70,7 +70,8 @@ sLED <- function(X, Y, adj.beta=0, rho=1000,
   hasPackage <- requireNamespace("doParallel", quietly = TRUE) && requireNamespace("parallel", quietly = TRUE)
   if (useMC) {
     if (!hasPackage) {
-      stop("Please install packages 'doParallel' and 'parallel' for multi-core parallelization.")
+      stop("Please install packages 'doParallel' and 'parallel' for multi-core parallelization.
+           Otherwise set useMC=FALSE for non-parallel computation.")
     }
     ## use multi-core parallelization
     permute.results <- sLEDpermuteMC(Z=Z, n1=n1, n2=n2, adj.beta=adj.beta, rho=rho, ncore=ncore,
