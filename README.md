@@ -4,16 +4,14 @@ This is the R Code for
 > Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, with Application to Detecting Schizophrenia Risk Genes", [arXiv:1606.00252](https://arxiv.org/abs/1606.00252).
 
 Pease cite sLED in your publication if it helps your research:
-> @article{zhu2016testing,
-
-  title={Testing High Dimensional Differential Matrices, with Application to Detecting Schizophrenia Risk Genes},
-  
-  author={Zhu, Lingxue and Lei, Jing and Devlin, Bernie and Roeder, Kathryn},
-  
-  journal={arXiv preprint arXiv:1606.00252},
-  
-  year={2016}
+```
+@article{zhu2016testing,
+    title={Testing High Dimensional Differential Matrices, with Application to Detecting Schizophrenia Risk Genes},
+    author={Zhu, Lingxue and Lei, Jing and Devlin, Bernie and Roeder, Kathryn},
+    journal={arXiv preprint arXiv:1606.00252},
+    year={2016}
 }
+```
 
 ## A short introduction to sLED
 Suppose X, Y are p-dimensional random vectors independently coming from two populations.
