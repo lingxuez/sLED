@@ -1,0 +1,22 @@
+Package: sLED
+Title: A Sparse Leading Eigenvalue Driven (sLED) Test for High-dimensional
+    Matrices
+Version: 0.0.0.9000
+Authors@R: person("Lingxue", "Zhu", email = "lzhu1@cmu.deu", role = c("aut", "cre"))
+Description: A two-sample test for high-dimensional relationship matrices,
+    including covariance matrices, using a sparse leading eigenvalue driven
+    procedure. Reference: Zhu, Lei, Devlin and Roeder (2016), "Testing High
+    Dimensional Differential Matrices, with Application to Detecting Schizophrenia
+    Risk Genes", arXiv:1606.00252.
+Depends:
+    R (>= 3.2.3)
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Imports:
+    rARPACK
+Suggests:
+    testthat,
+    parallel,
+    doParallel
+RoxygenNote: 5.0.1
