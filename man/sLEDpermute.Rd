@@ -2,7 +2,7 @@
 % Please edit documentation in R/sLEDpermute.R
 \name{sLEDpermute}
 \alias{sLEDpermute}
-\title{Get the sLED test statistic on permuted samples.}
+\title{sLED permutation}
 \usage{
 sLEDpermute(Z, n1, n2, adj.beta = 0, rho = 1000, sumabs.seq = 0.2,
   npermute = 100, seeds = NULL, verbose = TRUE, niter = 20,
@@ -18,7 +18,7 @@ sLEDpermute(Z, n1, n2, adj.beta = 0, rho = 1000, sumabs.seq = 0.2,
 \item{adj.beta}{a positive number representing the power to transform correlation matrices 
 to weighted adjacency matrices by \eqn{A_{ij} = |r_ij|^adj.beta}, 
 where \eqn{r_ij} represents the Pearson correlation.
-When adj.beta=0, the regular correlation marix \eqn{(r_ij)} is used.}
+When adj.beta=0, the regular covariance marix is used.}
 
 \item{rho}{a large positive constant such that \eqn{A(X)-A(Y)+diag(rep(rho, p))} is positive definite.}
 
@@ -33,15 +33,16 @@ If set tu NULL, then the default seeds are used.}
 
 \item{verbose}{whether to print the progress during permutation tests}
 
-\item{niter}{the number of iterations to use in the PMD algorithm (see \code{fastPMD()})}
+\item{niter}{the number of iterations to use in the PMD algorithm (see \code{sLEDTestStat()})}
 
-\item{trace}{whether to trace the progress of PMD algorithm (see \code{fastPMD()})}
+\item{trace}{whether to trace the progress of PMD algorithm (see \code{sLEDTestStat()})}
 }
 \value{
-Tn.perm the test statistic for permuted samples
-
-Tn.perm.sign the sign for permuted samples: "pos" if the permuted test statistic is given by sEig(D), 
-         and "neg" if is given by sEig(-D)
+A list containing the following components:
+ \item{Tn.perm}{a numeric vector with length \code{npermute}, the test statistic in permutations.}
+ \item{Tn.perm.sign}{a vector of characters with length \code{npermute}, the sign in permutations: 
+     "pos" if the permuted test statistic is given by sEig(D), and "neg" if is given by sEig(-D),
+     where \code{sEig} denotes the sparse leading eigenvalue.}
 }
 \description{
 Get the sLED test statistic on permuted samples.
@@ -51,6 +52,6 @@ Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matri
 with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
 }
 \seealso{
-\code{getTestStat()}, \code{sLED()}.
+\code{sLEDpermuteMC()}, \code{sLED()}.
 }
 

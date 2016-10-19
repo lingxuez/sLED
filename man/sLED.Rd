@@ -2,12 +2,11 @@
 % Please edit documentation in R/sLED.R
 \name{sLED}
 \alias{sLED}
-\title{A Function that performs the sparse leading eigenvalue driven (sLED) Test for 
-tow-sample high-dimensional covariance and relationship matrices.}
+\title{The sparse leading eigenvalue driven (sLED) test}
 \usage{
 sLED(X, Y, adj.beta = 0, rho = 1000, sumabs.seq = 0.2, npermute = 100,
   seeds = NULL, verbose = TRUE, niter = 20, trace = FALSE,
-  useMC = TRUE, ncore = 2)
+  useMC = FALSE, ncore = 2)
 }
 \arguments{
 \item{X}{n1-by-p matrix for samples from the first population. 
@@ -19,7 +18,7 @@ Rows are samples/observations, while columns are the features.}
 \item{adj.beta}{a positive number representing the power to transform correlation matrices 
 to weighted adjacency matrices by \eqn{A_{ij} = |r_ij|^adj.beta}, 
 where \eqn{r_ij} represents the Pearson correlation.
-When adj.beta=0, the regular correlation marix \eqn{(r_ij)} is used.}
+When adj.beta=0, the covariance marix is used.}
 
 \item{rho}{a large positive constant such that \eqn{A(X)-A(Y)+diag(rep(rho, p))} is positive definite.}
 
@@ -34,41 +33,40 @@ If set tu NULL, then the default seeds are used.}
 
 \item{verbose}{whether to print the progress during permutation tests}
 
-\item{niter}{the number of iterations to use in the PMD algorithm (see \code{fastPMD()})}
+\item{niter}{the number of iterations to use in the PMD algorithm (see \code{sLEDTestStat()})}
 
-\item{trace}{whether to trace the progress of PMD algorithm (see \code{fastPMD()})}
+\item{trace}{whether to trace the progress of PMD algorithm (see \code{sLEDTestStat()})}
 }
 \value{
-Tn the test statistic
-
-Tn.perm the test statistic for permuted samples
-
-Tn.perm.sign the sign for permuted samples: "pos" if the permuted test statistic is given by sEig(D), 
-         and "neg" if is given by sEig(-D)
-
-pVal the p-value of sLED test
-
-sumabs.seq  the sequence of sparsity parameters
-
-rho the positive constant used
-
-stats the sequence of test statistics
-
-sign signs when using different sparsity parameters,
-         "pos" if the test statistic is given by sEig(D), and "neg" if is given by sEig(-D).
-
-v the sequence of sparse leading eigenvectors
-
-leverage the leverage score for genes (defined as \eqn{v^2} element-wise) using different sparsity parameters
+A list containing the following components:
+ \item{Tn}{the test statistic}
+ \item{Tn.perm}{the test statistic for permuted samples}
+ \item{Tn.perm.sign}{the sign for permuted samples: "pos" if the permuted test statistic is given by sEig(D), 
+         and "neg" if is given by sEig(-D)}
+ \item{pVal}{the p-value of sLED test}  
+ \item{sumabs.seq}{a numeric vector for a sequence of sparsity parameters. Default is 0.2.}
+ \item{rho}{a positive constant to augment the diagonal of the differential matrix \eqn{D}
+           such that \eqn{D + rho*I} becomes positive definite.}
+ \item{stats}{a numeric vector of test statistics when using different sparsity parameters
+           (corresponding to \code{sumabs.seq}).}
+ \item{sign}{a vector of signs when using different sparsity parameters (corresponding to \code{sumabs.seq}).
+         Sign is "pos" if the test statistic is given by sEig(D), and "neg" if is given by sEig(-D),
+         where \code{sEig} denotes the sparse leading eigenvalue.}
+ \item{v}{the sequence of sparse leading eigenvectors, each row corresponds to one sparsity 
+         parameter given by \code{sumabs.seq}.}
+ \item{leverage}{the leverage score for genes (defined as \eqn{v^2} element-wise) using 
+         different sparsity parameters. Each row corresponds to one sparsity 
+         parameter given by \code{sumabs.seq}.}
 }
 \description{
+The sLED test for two-sample high-dimensional covariance and relationship matrices.
 Suppose X, Y are p-dimensional random vectors independently coming from two populations.
 Let \eqn{D} be the differential matrix given by
 \deqn{D = A(Y) - A(X)} 
 sLED tests the following hypothesis:
 \deqn{H_0: D=0 versus H_1: D != 0}
-where A() represents some p-by-p relationship matrix among features, e.g., covariance matrices, 
-correlation matrices, as well as the weighted adjacency matrices defined as
+where A() represents some p-by-p relationship matrix among features, including covariance matrices, 
+correlation matrices, or the weighted adjacency matrices defined as
 \deqn{A_{ij} = |corr(i, j)|^b}
 for some constant b > 0, 1 <= i, j <= p.
 }
@@ -77,6 +75,6 @@ Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matri
 with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
 }
 \seealso{
-\code{getTestStat()}, \code{fastPMD()}.
+\code{getTestStat()}, \code{symmPMD()}.
 }
 
