@@ -35,10 +35,6 @@ install.packages("devtools")
 library("devtools")
 devtools::install("/path/to/sLEDpackage")
 ```
-Alternatively, it can be installed from command line by 
-```
-R CMD INSTALL sLED_0.0.0.9000.tar.gz
-```
 
 ## Example
 Here is a simple example to apply sLED test, when the data is generated from null hypothesis.
