@@ -1,7 +1,7 @@
-#' A Function that performs the sparse leading eigenvalue driven (sLED) Test for 
-#' tow-sample high-dimensional covariance and relationship matrices.
+#' The sparse leading eigenvalue driven (sLED) test 
 #' 
 #' @description 
+#' The sLED test for two-sample high-dimensional covariance and relationship matrices.
 #' Suppose X, Y are p-dimensional random vectors independently coming from two populations.
 #' Let \eqn{D} be the differential matrix given by
 #' \deqn{D = A(Y) - A(X)} 
