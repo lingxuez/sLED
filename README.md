@@ -33,9 +33,9 @@ This package can be installed through `devtools` in R as follows:
 ```{r}
 install.packages("devtools")
 library("devtools")
-devtools::install("/path/to/sLEDpackage")
+devtools::install("path/to/this/directory")
 ```
-where `"/path/to/sLEDpackage"` should be the path to this directory in your computer.
+where `"path/to/this/directory"` should be repalced by the path to this directory in your computer.
 
 Alternatively, in terminal, go to the directory that contains the package directory, and use
 ```
