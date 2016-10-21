@@ -11,6 +11,10 @@ Chang.wildBootstrap(X, Y, sigma.x, sigma.y, Tdenominator, nresample = 1000)
 
 \item{Y}{n2 by p matrix, observation of the second population, columns are features}
 
+\item{sigma.x}{p-by-p matrix, sample covariance of X, pre-calculated}
+
+\item{sigma.y}{p-by-p matrix, sample covariance of X, pre-calculated}
+
 \item{Tdenominator}{the denominator of the test statistics, which is pre-calculated 
 and remains unchanged in bootstrap.}
 

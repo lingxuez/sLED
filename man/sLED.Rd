@@ -35,7 +35,11 @@ If set tu NULL, then the default seeds are used.}
 
 \item{niter}{the number of iterations to use in the PMD algorithm (see \code{sLEDTestStat()})}
 
-\item{trace}{whether to trace the progress of PMD algorithm (see \code{sLEDTestStat()})}
+\item{trace}{logical, whether to trace the progress of PMD algorithm (see \code{sLEDTestStat()})}
+
+\item{useMC}{logical, whether to use multi-core version}
+
+\item{ncore}{a number indicating how many cores to use in parallelization}
 }
 \value{
 A list containing the following components:

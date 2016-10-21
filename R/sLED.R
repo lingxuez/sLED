@@ -29,7 +29,9 @@
 #'        If set tu NULL, then the default seeds are used.
 #' @param verbose whether to print the progress during permutation tests
 #' @param niter the number of iterations to use in the PMD algorithm (see \code{sLEDTestStat()})
-#' @param trace whether to trace the progress of PMD algorithm (see \code{sLEDTestStat()})
+#' @param trace logical, whether to trace the progress of PMD algorithm (see \code{sLEDTestStat()})
+#' @param useMC logical, whether to use multi-core version
+#' @param ncore a number indicating how many cores to use in parallelization
 #'
 #' @return A list containing the following components:
 #'  \item{Tn}{the test statistic}

@@ -43,6 +43,8 @@ Chang.maxBoot.test <- function(X, Y, nresample=1000) {
 #' 
 #' @param X n1 by p matrix, observation of the first population, columns are features
 #' @param Y n2 by p matrix, observation of the second population, columns are features
+#' @param sigma.x p-by-p matrix, sample covariance of X, pre-calculated
+#' @param sigma.y p-by-p matrix, sample covariance of X, pre-calculated
 #' @param Tdenominator the denominator of the test statistics, which is pre-calculated 
 #'        and remains unchanged in bootstrap.
 #' @param nresample the number of bootstraps to perform

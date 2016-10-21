@@ -42,6 +42,9 @@ Schott.Frob.test <- function(X, Y) {
 }
 
 #' Trace of a matrix
+#' 
+#' @param A a matrix
+#' @return the trace of A (i.e., sum of diagonal entries)
 tr <- function(A) {
   return (sum(diag(A)))
 }

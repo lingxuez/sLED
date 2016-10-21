@@ -6,6 +6,12 @@
 \usage{
 tr(A)
 }
+\arguments{
+\item{A}{a matrix}
+}
+\value{
+the trace of A (i.e., sum of diagonal entries)
+}
 \description{
 Trace of a matrix
 }

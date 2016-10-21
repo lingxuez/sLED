@@ -16,9 +16,9 @@ test_that("sLED() under null hypothesis when n1=n2=50, p=100", {
                 verbose=TRUE, niter=20, trace=FALSE, useMC=FALSE)
   
   ## check results
-  expect_that(result$pVal, equals(0.6), info=info)
+  expect_that(result$pVal, equals(0.8), info=info)
   i.supp <- which(result$leverage != 0)
-  i.expect_supp <- c(27, 31, 32, 38, 57, 59, 67)
+  i.expect_supp <- c(8, 27, 46, 67, 77, 94)
   expect_that(i.supp, equals(i.expect_supp), info=info)
 })
 
@@ -41,8 +41,8 @@ test_that("sLED() under null hypothesis when n1=n2=50, p=100, using multi-core",
                  useMC=TRUE, ncore=2)
   
   ## check results
-  expect_that(result$pVal, equals(0.6), info=info)
+  expect_that(result$pVal, equals(0.8), info=info)
   i.supp <- which(result$leverage != 0)
-  i.expect_supp <- c(27, 31, 32, 38, 57, 59, 67)
+  i.expect_supp <- c(8, 27, 46, 67, 77, 94)
   expect_that(i.supp, equals(i.expect_supp), info=info)
 })
