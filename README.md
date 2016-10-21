@@ -35,6 +35,8 @@ install.packages("devtools")
 library("devtools")
 devtools::install("/path/to/sLEDpackage")
 ```
+where `"/path/to/sLEDpackage"` should be the path to this directory in your computer.
+
 Alternatively, in terminal, go to the directory that contains the package directory, and use
 ```
 $ R CMD build sLED
