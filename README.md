@@ -35,6 +35,21 @@ install.packages("devtools")
 library("devtools")
 devtools::install("/path/to/sLEDpackage")
 ```
+Alternatively, in terminal, go to the directory that contains the package directory, and use
+```
+$ R CMD build sLED
+* checking for file ‘sLED/DESCRIPTION’ ... OK
+* preparing ‘sLED’:
+* checking DESCRIPTION meta-information ... OK
+* checking for LF line-endings in source and make files
+* checking for empty or unneeded directories
+* building ‘sLED_0.0.0.9000.tar.gz’
+```
+and you should have the file `sLED_0.0.0.9000.tar.gz` in the directory. Now use
+```
+R CMD INSTALL sLED_0.0.0.9000.tar.gz
+```
+
 
 ## Example
 Here is a simple example to apply sLED test, when the data is generated from null hypothesis.
@@ -66,3 +81,5 @@ Finally, note that the test can get computationally expensive with more permutat
 result_multicore <- sLED(X=X, Y=Y, useMC=TRUE, ncore=2)
 ```
 
+## Test
+This package is still under developement, and has only been tested on Mac OS X 10.11.6.
