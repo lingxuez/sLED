@@ -33,11 +33,10 @@ This package can be installed through `devtools` in R as follows:
 ```{r}
 install.packages("devtools")
 library("devtools")
-devtools::install("path/to/this/directory")
+devtools::install_github("lingxuez/sLED")
 ```
-where `"path/to/this/directory"` should be repalced by the path to this directory in your computer.
 
-Alternatively, in terminal, go to the directory that contains the package directory, and use
+Alternatively, you can download the files, open the terminal, go to the directory that contains the package directory, and use
 ```
 $ R CMD build sLED
 * checking for file ‘sLED/DESCRIPTION’ ... OK
