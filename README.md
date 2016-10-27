@@ -25,17 +25,18 @@ The goal for sLED is to test the following hypothesis:
 
 H_0: D=0 versus H_1: D \neq 0
 
-and to identify the non-zero entries if the null hypothesis is rejected. sLED is more powerfull than many existing two-sample testing procedures for high-dimensional covariance matrices, even when the signal is both weak and sparse.
+and to identify the non-zero entries if the null hypothesis is rejected. sLED is more powerful than many existing two-sample testing procedures for high-dimensional covariance matrices (that is, when p is larger than the sample sizes), even when the signal is both weak and sparse.
 
 
 ## Installation
-This package can be installed through `devtools` in R as follows:
+This package can be installed through `devtools` in R:
 ```{r}
-install.packages("devtools")
+install.packages("devtools") ## if not installed
 library("devtools")
-devtools::install("/path/to/sLEDpackage")
+devtools::install_github("lingxuez/sLED")
 ```
-Alternatively, in terminal, go to the directory that contains the package directory, and use
+
+Alternatively, you can download the files, open the terminal, go to the directory that contains the package directory, and use
 ```
 $ R CMD build sLED
 * checking for file ‘sLED/DESCRIPTION’ ... OK
@@ -45,16 +46,14 @@ $ R CMD build sLED
 * checking for empty or unneeded directories
 * building ‘sLED_0.0.0.9000.tar.gz’
 ```
-and you should have the file `sLED_0.0.0.9000.tar.gz` in the directory. Now use
+and you should have the file `sLED_0.0.0.9000.tar.gz` in the directory. Now run
 ```
 R CMD INSTALL sLED_0.0.0.9000.tar.gz
 ```
 
 
 ## Example
-Here is a simple example to apply sLED test, when the data is generated from null hypothesis.
-
-First, we generate the data X, Y, each containing 50 samples independently coming from standard Normal distributions with p=100:
+First, let's try sLED under the null hypothesis. We generate 100 samples from standard Normal distributions with p=100:
 ```{r}
   n <- 50
   p <- 100
@@ -70,16 +69,22 @@ library("sLED")
 result <- sLED(X=X, Y=Y, npermute=10)
 ```
 
-Now you can check the p-value of the test, which hopefully is not too small:
+Let's check the p-value of the test, which hopefully is not too small (since `X` and `Y` are identically distributed):
 ```{r}
 result$pVal
-## 0.6
+## 0.8
 ```
 
-Finally, note that the test can get computationally expensive with more permutations. For large data sets, the multi-core version is recommended. This requires the R packages `doParallel` and `parallel`. Once they are installed, a multi-core sLED can be run by
+... more examples to come ...
+
+
+## Parallelization
+
+The test can get computationally expensive with large number of permutations. For big data sets, the multi-core version is recommended:
 ```{r}
-result_multicore <- sLED(X=X, Y=Y, useMC=TRUE, ncore=2)
+result_multicore <- sLED(X=X, Y=Y, npermute=1000, useMC=TRUE, ncore=2)
 ```
+Please note that you need to have R packages `doParallel` and `parallel` installed.
 
-## Test
+## Tests
 This package is still under developement, and has only been tested on Mac OS X 10.11.6.
