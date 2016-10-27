@@ -14,6 +14,13 @@
 #' 
 #' @seealso \code{Cai.max.test()}, \code{Chang.maxBoot.test()}, 
 #' \code{WL.randProj.test()}, \code{Schott.Frob.test()}.
+#' 
+#' @references 
+#' Li and Chen (2012)
+#' "Two Sample Tests for High-dimensional Covariance Matrices",
+#' The Annals of Statistics.
+#' 
+#' @export
 LC.U.test <- function(X, Y){
   n1 = nrow(X)
   n2 = nrow(Y)

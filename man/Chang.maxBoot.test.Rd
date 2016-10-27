@@ -26,6 +26,11 @@ The two-sample test for high-dimensional covariance matrices in
 Using a wild boostrap procedure, the test statistic is essentially the square root of
  the statistic proposed in Cai, Liu and Xia (2013).
 }
+\references{
+Chang, Zhou, Zhou, and Wang (2016)
+"Comparing Large Covariance Matrices under Weak Conditions on the Dependence Structure",
+arXiv preprint arXiv:1505.04493.
+}
 \seealso{
 \code{Cai.max.test()}, \code{LC.U.test()}, \code{WL.randProj.test()}, \code{Schott.Frob.test()}.
 }

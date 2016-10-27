@@ -17,6 +17,8 @@
 #'      
 #' @seealso \code{Cai.max.test()}, \code{Chang.maxBoot.test()}, 
 #'        \code{LC.U.test()}, \code{WL.randProj.test()}, \code{Schott.Frob.test()}.
+#'        
+#' @export
 getPermutePval <- function(X, Y, testFunction, npermute=100) {
   test.res <- testFunction(X=X, Y=Y)
   test.stat.permute <- getPermuteStat(X=X, Y=Y, testFunction=testFunction, npermute=npermute)

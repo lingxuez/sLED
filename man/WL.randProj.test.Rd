@@ -24,6 +24,11 @@ The two-sample covariance test using random projections
 proposed in Wu and Li (2015) 
 "Tests for High-Dimensional Covariance Matrices Using Random Matrix Projection".
 }
+\references{
+Wu and Li (2015) 
+"Tests for High-Dimensional Covariance Matrices Using Random Matrix Projection",
+arXiv preprint arXiv:1511.01611.
+}
 \seealso{
 \code{Cai.max.test()}, \code{Chang.maxBoot.test()}, \code{LC.U.test()},
  \code{Schott.Frob.test()}.

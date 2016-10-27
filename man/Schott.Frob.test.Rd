@@ -23,6 +23,12 @@ The two-sample covariance test proposed in Schott (2007)
  The original test procedure handles multiple multivariate Normal distributions, 
  but for the purpose of our simulation, the implementation is for two populations only.
 }
+\references{
+Schott (2007) 
+"A test for the equality of covariance matrices when
+the dimension is large relative to the sample sizes",
+Computational Statistics & Data Analysis.
+}
 \seealso{
 \code{Cai.max.test()}, \code{Chang.maxBoot.test()}, 
 \code{LC.U.test()}, \code{WL.randProj.test()}.

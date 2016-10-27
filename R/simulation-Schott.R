@@ -16,6 +16,14 @@
 #'  
 #' @seealso \code{Cai.max.test()}, \code{Chang.maxBoot.test()}, 
 #' \code{LC.U.test()}, \code{WL.randProj.test()}.
+#' 
+#' @references 
+#' Schott (2007) 
+#' "A test for the equality of covariance matrices when
+#' the dimension is large relative to the sample sizes",
+#' Computational Statistics & Data Analysis.
+#'  
+#' @export
 Schott.Frob.test <- function(X, Y) {
   n1 <- nrow(X)
   n2 <- nrow(Y)

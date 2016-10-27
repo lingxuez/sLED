@@ -14,6 +14,13 @@
 #'            (max of independent standard normal)}
 #' @seealso \code{Cai.max.test()}, \code{Chang.maxBoot.test()}, \code{LC.U.test()},
 #'  \code{Schott.Frob.test()}.
+#'  
+#' @references 
+#' Wu and Li (2015) 
+#' "Tests for High-Dimensional Covariance Matrices Using Random Matrix Projection",
+#' arXiv preprint arXiv:1511.01611.
+#'  
+#' @export
 WL.randProj.test <- function(X, Y, nproj=100) {
   p <- ncol(X)
   n1 <- nrow(X)

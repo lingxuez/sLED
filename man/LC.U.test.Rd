@@ -23,6 +23,11 @@ Testing the equality of two high-dimensional covariance matrices
 based on the \eqn{L_2} norm, proposed in Li and Chen (2012)
 "Two Sample Tests for High-dimensional Covariance Matrices"
 }
+\references{
+Li and Chen (2012)
+"Two Sample Tests for High-dimensional Covariance Matrices",
+The Annals of Statistics.
+}
 \seealso{
 \code{Cai.max.test()}, \code{Chang.maxBoot.test()}, 
 \code{WL.randProj.test()}, \code{Schott.Frob.test()}.

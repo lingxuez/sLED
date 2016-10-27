@@ -13,6 +13,13 @@
 #'  
 #' @seealso \code{Chang.maxBoot.test()}, \code{LC.U.test()}, \code{WL.randProj.test()}, 
 #' \code{Schott.Frob.test()}.
+#' 
+#' @references 
+#' Cai, Liu and Xia (2013)
+#' "Two-Sample Covariance Matrix Testing and Support Recovery in High-Dimensional and Sparse Settings",
+#' Journal of the American Statistical Association.
+#' 
+#' @export
 Cai.max.test <- function(X, Y){
   p <- ncol(X)
   M <- Cai.Mmatrix(X, Y)

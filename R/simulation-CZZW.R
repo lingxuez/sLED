@@ -15,6 +15,13 @@
 #'  \item{pVal}{bootstrap p-value}
 #' 
 #' @seealso \code{Cai.max.test()}, \code{LC.U.test()}, \code{WL.randProj.test()}, \code{Schott.Frob.test()}.
+#' 
+#' @references 
+#' Chang, Zhou, Zhou, and Wang (2016)
+#' "Comparing Large Covariance Matrices under Weak Conditions on the Dependence Structure",
+#' arXiv preprint arXiv:1505.04493.
+#' 
+#' @export
 Chang.maxBoot.test <- function(X, Y, nresample=1000) {
   n1 <- nrow(X)
   n2 <- nrow(Y)
