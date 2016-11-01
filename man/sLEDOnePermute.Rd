@@ -16,9 +16,8 @@ sLEDOnePermute(i, Z, n1, n2, seeds = NULL, sumabs.seq = 0.2, adj.beta = 0,
 
 \item{n2}{the (n1+1):(n1+n2) rows in Z represent the second population}
 
-\item{seeds}{a numeric vector with the length equals to npermute, specifying the
-seed for randomly permutating samples in each permutation. 
-If set tu NULL, then the default seeds are used.}
+\item{seeds}{a numeric vector, where \code{seeds[i]} specifies the seeding for 
+the i-th permutation. Set to \code{NULL} if do not want to specify.}
 
 \item{sumabs.seq}{a numeric vector specifing the sequence of sparsity parameters to use, 
 each between \eqn{1/sqrt(p)} and 1.}
@@ -29,12 +28,6 @@ where \eqn{r_ij} represents the Pearson correlation.
 When adj.beta=0, the regular correlation marix \eqn{(r_ij)} is used.}
 
 \item{rho}{a large positive constant such that \eqn{A(X)-A(Y)+diag(rep(rho, p))} is positive definite.}
-
-\item{verbose}{whether to print the progress during permutation tests}
-
-\item{niter}{the number of iterations to use in the PMD algorithm (see \code{sLEDTestStat()})}
-
-\item{trace}{whether to trace the progress of PMD algorithm (see \code{sLEDTestStat()})}
 }
 \value{
 A list containing the following components:
@@ -44,5 +37,8 @@ A list containing the following components:
 }
 \description{
 One permutation of sLED
+}
+\seealso{
+\code{sLEDpermute()}.
 }
 

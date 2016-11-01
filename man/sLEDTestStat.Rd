@@ -51,6 +51,6 @@ Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matri
 with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
 }
 \seealso{
-\code{sLED()}, \code{symmPMD()}.
+\code{sLED()}.
 }
 

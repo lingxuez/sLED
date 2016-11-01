@@ -4,7 +4,8 @@
 \alias{getPermutePval}
 \title{Permutation p-value}
 \usage{
-getPermutePval(X, Y, testFunction, npermute = 100)
+getPermutePval(X, Y, testFunction, npermute = 100, useMC = FALSE,
+  mc.cores = 1, seeds = NULL)
 }
 \arguments{
 \item{X}{n1 by p matrix of the first population}
@@ -15,6 +16,15 @@ getPermutePval(X, Y, testFunction, npermute = 100)
 and returns a list including the field \code{test.stat} for test statistic}
 
 \item{npermute}{the number of permutations to conduct}
+
+\item{useMC}{logical variable indicating whether to use multicore parallelization.
+R packages \code{parallel} and \code{doParallel} are required if set to \code{TRUE}.}
+
+\item{mc.cores}{decide the number of cores to use when \code{useMC} is set to \code{TRUE}.}
+
+\item{seeds}{a numeric vector with length \code{npermute}, 
+where \code{seeds[i]} specifies the seeding for the i-th permutation. 
+Set to \code{NULL} if do not want to specify.}
 }
 \value{
 A list containing the following components:

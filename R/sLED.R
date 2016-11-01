@@ -24,14 +24,14 @@
 #' @param sumabs.seq a numeric vector specifing the sequence of sparsity parameters to use, 
 #'        each between \eqn{1/sqrt(p)} and 1.
 #' @param npermute number of permutations to use, default is 100
-#' @param seeds a numeric vector with the length equals to npermute, specifying the  
-#'        seed for randomly permutating samples in each permutation. 
-#'        If set tu NULL, then the default seeds are used.
-#' @param verbose whether to print the progress during permutation tests
-#' @param niter the number of iterations to use in the PMD algorithm (see \code{sLEDTestStat()})
-#' @param trace logical, whether to trace the progress of PMD algorithm (see \code{sLEDTestStat()})
 #' @param useMC logical, whether to use multi-core version
-#' @param ncore a number indicating how many cores to use in parallelization
+#' @param mc.cores a number indicating how many cores to use in parallelization
+#' @param seeds a numeric vector with the length equals to \code{npermute}, 
+#'        where \code{seeds[i]} specifies the seeding for the i-th permutation. 
+#'        Set to \code{NULL} if do not want to specify.
+#' @param verbose whether to print the progress during permutation tests
+#' @param niter the number of iterations to use in the PMD algorithm (see \code{symmPMD()})
+#' @param trace logical, whether to trace the progress of PMD algorithm (see \code{symmPMD()})
 #'
 #' @return A list containing the following components:
 #'  \item{Tn}{the test statistic}
@@ -56,14 +56,11 @@
 #' @references Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, 
 #' with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
 #' 
-#' @seealso \code{getTestStat()}, \code{symmPMD()}.
+#' @seealso \code{symmPMD()}.
 #' @export
-sLED <- function(X, Y, adj.beta=0, rho=1000, 
-                 sumabs.seq=0.2, npermute=100, seeds=NULL, verbose=TRUE, niter=20, trace=FALSE,
-                 useMC=FALSE, ncore=2) {
+sLED <- function(X, Y, adj.beta=0, rho=1000, sumabs.seq=0.2, npermute=100, 
+                 useMC=FALSE, mc.cores=1, seeds=NULL, verbose=TRUE, niter=20, trace=FALSE) {
   
-  n1 <- nrow(X)
-  n2 <- nrow(Y)
   # # center observations
   # X <- scale(X, center=TRUE, scale=FALSE)
   # Y <- scale(Y, center=TRUE, scale=FALSE)
@@ -75,23 +72,13 @@ sLED <- function(X, Y, adj.beta=0, rho=1000,
   Tn <- pma.results$stats
  
   ## permutation test
+  n1 <- nrow(X)
+  n2 <- nrow(Y)
   Z <- rbind(X, Y)
-  if (useMC) {
-    ## try to use multi-core parallelization
-    hasPackage <- requireNamespace("doParallel", quietly = TRUE) && requireNamespace("parallel", quietly = TRUE)
-    if (!hasPackage) {
-      stop("Please install packages 'doParallel' and 'parallel' for multi-core parallelization.
-           Otherwise set useMC=FALSE for non-parallel computation.")
-    }
-    permute.results <- sLEDpermuteMC(Z=Z, n1=n1, n2=n2, adj.beta=adj.beta, rho=rho, ncore=ncore,
-                                   sumabs.seq=sumabs.seq, npermute=npermute, seeds=seeds, 
-                                   verbose=verbose, niter=niter, trace=trace) 
-  } else {
-    ## without parallelization
-    permute.results <- sLEDpermute(Z=Z, n1=n1, n2=n2, adj.beta=adj.beta, rho=rho,
-                                  sumabs.seq=sumabs.seq, npermute=npermute, seeds=seeds, 
-                                  verbose=verbose, niter=niter, trace=trace)
-  }
+  permute.results <- sLEDpermute(Z=Z, n1=n1, n2=n2, adj.beta=adj.beta, rho=rho,
+                                 sumabs.seq=sumabs.seq, npermute=npermute, 
+                                 useMC=useMC, mc.cores=mc.cores, seeds=seeds, 
+                                 verbose=verbose, niter=niter, trace=trace)
 
   ## p-value
   pVal = rowSums(permute.results$Tn.permute > Tn) / npermute
@@ -138,8 +125,7 @@ sLED <- function(X, Y, adj.beta=0, rho=1000,
 #' @references Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, 
 #' with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
 #' 
-#' @seealso \code{sLED()}, \code{symmPMD()}.
-#' @export
+#' @seealso \code{sLED()}.
 sLEDTestStat <- function(Dmat, rho=1000, sumabs.seq=0.2,
                          niter=20, trace=FALSE) {
   ndim <- 1 ## only consider the first sparse eigenvector

@@ -6,7 +6,7 @@
 \usage{
 sLED(X, Y, adj.beta = 0, rho = 1000, sumabs.seq = 0.2, npermute = 100,
   seeds = NULL, verbose = TRUE, niter = 20, trace = FALSE,
-  useMC = FALSE, ncore = 2)
+  useMC = FALSE, mc.cores = 1)
 }
 \arguments{
 \item{X}{n1-by-p matrix for samples from the first population. 
@@ -27,19 +27,19 @@ each between \eqn{1/sqrt(p)} and 1.}
 
 \item{npermute}{number of permutations to use, default is 100}
 
-\item{seeds}{a numeric vector with the length equals to npermute, specifying the
-seed for randomly permutating samples in each permutation. 
-If set tu NULL, then the default seeds are used.}
+\item{seeds}{a numeric vector with the length equals to \code{npermute}, 
+where \code{seeds[i]} specifies the seeding for the i-th permutation. 
+Set to \code{NULL} if do not want to specify.}
 
 \item{verbose}{whether to print the progress during permutation tests}
 
-\item{niter}{the number of iterations to use in the PMD algorithm (see \code{sLEDTestStat()})}
+\item{niter}{the number of iterations to use in the PMD algorithm (see \code{symmPMD()})}
 
-\item{trace}{logical, whether to trace the progress of PMD algorithm (see \code{sLEDTestStat()})}
+\item{trace}{logical, whether to trace the progress of PMD algorithm (see \code{symmPMD()})}
 
 \item{useMC}{logical, whether to use multi-core version}
 
-\item{ncore}{a number indicating how many cores to use in parallelization}
+\item{mc.cores}{a number indicating how many cores to use in parallelization}
 }
 \value{
 A list containing the following components:
@@ -79,6 +79,6 @@ Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matri
 with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
 }
 \seealso{
-\code{getTestStat()}, \code{symmPMD()}.
+\code{symmPMD()}.
 }
 

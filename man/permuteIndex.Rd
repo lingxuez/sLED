@@ -19,4 +19,7 @@ A list with the following components:
 \description{
 Permute indices
 }
+\seealso{
+\code{sLEDpermute()}.
+}
 
