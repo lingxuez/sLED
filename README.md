@@ -52,31 +52,86 @@ R CMD INSTALL sLED_0.0.0.9000.tar.gz
 ```
 
 
-## Example
+## Examples
+### Size of sLED
 First, let's try sLED under the null hypothesis. We generate 100 samples from standard Normal distributions with p=100:
 ```{r}
-  n <- 50
-  p <- 100
-  set.seed(99)
-  X <- matrix(rnorm(n*p, mean=0, sd=1), nrow=n, ncol=p)
-  set.seed(42)
-  Y <- matrix(rnorm(n*p, mean=0, sd=1), nrow=n, ncol=p)
+n <- 50
+p <- 100
+set.seed(99)
+X <- matrix(rnorm(n*p, mean=0, sd=1), nrow=n, ncol=p)
+set.seed(42)
+Y <- matrix(rnorm(n*p, mean=0, sd=1), nrow=n, ncol=p)
 ```
 
-Now we apply sLED. For illustration, we use 10 permutations here and leave all other arguments as default:
+Now we apply sLED. For illustration, we use 50 permutations here and leave all other arguments as default:
 ```{r}
 library("sLED")
-result <- sLED(X=X, Y=Y, npermute=10)
+result <- sLED(X=X, Y=Y, npermute=50)
 ```
 
 Let's check the p-value of the test, which hopefully is not too small (since `X` and `Y` are identically distributed):
 ```{r}
 result$pVal
-## 0.8
+## [1] 0.88
 ```
 
-... more examples to come ...
+### Power of sLED
+Now let's try a more interesting example to show the power of sLED. Let's generate another 50 Gaussian samples with a different covariance structure:
+```{r}
+n <- 50
+p <- 100
+  
+## The first population is still standard normal
+set.seed(99)
+X <- matrix(rnorm(n*p, mean=0, sd=1), nrow=n, ncol=p)
+  
+## For the second population, the first 10 genes have different correlation structure
+s <- 10
+sigma.2 <- diag(p)
+sigma.2[1:s, 1:s] <- sigma.2[1:s, 1:s] + 0.2
+  
+set.seed(42)
+Y2 <- MASS::mvrnorm(n, mu=rep(0, p), Sigma=sigma.2)
+```
 
+Now we run sLED. Note that the changes in covariance matrices happen at 10% of the genes, so the ideal sparsity parameter `sumabs` should be around (usually slightly less than) `sqrt(0.1)=0.32`. Here, we pick `sumabs=0.25`, and use 100 permutations:
+```{r}
+## for reproducibility, let's also set the seeds for permutation
+result <- sLED(X=X, Y=Y2, sumabs.seq=0.25, npermute=100, seeds = c(1:100))
+result$pVal
+## [1] 0
+```
+The p-value is near zero. Further more, let's check which genes are detected by sLED, that is, have non-zero leverage:
+```{r}
+which(result$leverage != 0)
+## [1]  1  2  4  5  7  8  9 10 30
+```
+We see that sLED correctly identifies most of the first 10 signaling genes!
+
+We can also run sLED across a range of sparsity parameters `sumabs` at once:
+```{r}
+## here we let sumabs.seq to be a vector of 3 different sparsity parameters
+result <- sLED(X=X, Y=Y2, sumabs.seq=c(0.2, 0.25, 0.3), npermute=100, seeds = c(1:100))
+                 
+## we can check the 3 p-values, which are all zero
+result$pVal
+## [1] 0 0 0
+
+## let's also look at which genes have non-zero leverage
+detected.genes <- apply(result$leverage, 1, function(x){which(x!=0)})
+names(detected.genes) <- paste0("sumabs=",result$sumabs.seq)
+detected.genes
+## $`sumabs=0.2`
+## [1]  2  4  5  7  9 10
+##
+## $`sumabs=0.25`
+## [1]  1  2  4  5  7  8  9 10 30
+##
+## $`sumabs=0.3`
+## [1]  1  2  3  4  5  6  7  8  9 10 20 24 30 39 50 56 60 88 99
+```
+As shown above, the sLED p-value is usually pretty stable for a reasonable range of sparsity parameters. With larger `sumabs`, the solution becomes denser, i.e. more genes will have non-zero leverage.
 
 ## Parallelization
 
