@@ -82,7 +82,7 @@ result$pVal
 
 The test can get computationally expensive with large number of permutations. For big data sets, the multi-core version is recommended:
 ```{r}
-result_multicore <- sLED(X=X, Y=Y, npermute=1000, useMC=TRUE, ncore=2)
+result_multicore <- sLED(X=X, Y=Y, npermute=1000, useMC=TRUE, mc.cores=2)
 ```
 Please note that you need to have R packages `doParallel` and `parallel` installed.
 
