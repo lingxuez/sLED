@@ -4,7 +4,7 @@
 \alias{sLED}
 \title{The sparse leading eigenvalue driven (sLED) test}
 \usage{
-sLED(X, Y, adj.beta = 0, rho = 1000, sumabs.seq = 0.1, npermute = 100,
+sLED(X, Y, adj.beta = -1, rho = 1000, sumabs.seq = 0.2, npermute = 100,
   useMC = FALSE, mc.cores = 1, seeds = NULL, verbose = TRUE,
   niter = 20, trace = FALSE)
 }
