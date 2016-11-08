@@ -26,7 +26,7 @@ Set to \code{NULL} if do not want to specify.}
 Return the test statistic in the i-th permutation.
 }
 \description{
-Helper function for \code{getPermutePval()} when using multi-core parallelization.
+Helper function for \code{getPermutePval()}.
 }
 \seealso{
 \code{getPermutePval()}.

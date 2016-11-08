@@ -81,7 +81,7 @@ sLED <- function(X, Y, adj.beta=0, rho=1000, sumabs.seq=0.2, npermute=100,
                                  verbose=verbose, niter=niter, trace=trace)
 
   ## p-value
-  pVal = rowSums(permute.results$Tn.permute > Tn) / npermute
+  pVal = rowSums(Tn > permute.results$Tn.permute) / npermute
   
   return(c(pma.results, permute.results, list(Tn = Tn, pVal = pVal)))
 }

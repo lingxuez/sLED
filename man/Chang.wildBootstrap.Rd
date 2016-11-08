@@ -4,7 +4,8 @@
 \alias{Chang.wildBootstrap}
 \title{Wild bootstrap}
 \usage{
-Chang.wildBootstrap(X, Y, sigma.x, sigma.y, Tdenominator, nresample = 1000)
+Chang.wildBootstrap(X, Y, sigma.x, sigma.y, Tdenominator, nresample = 1000,
+  useMC = TRUE, mc.cores = 1)
 }
 \arguments{
 \item{X}{n1 by p matrix, observation of the first population, columns are features}
@@ -19,6 +20,11 @@ Chang.wildBootstrap(X, Y, sigma.x, sigma.y, Tdenominator, nresample = 1000)
 and remains unchanged in bootstrap.}
 
 \item{nresample}{the number of bootstraps to perform}
+
+\item{useMC}{logical variable indicating whether to use multicore parallelization.
+R packages \code{parallel} and \code{doParallel} are required if set to \code{TRUE}.}
+
+\item{mc.cores}{decide the number of cores to use when \code{useMC} is set to \code{TRUE}.}
 }
 \value{
 A numeric vector with length \code{nresample}, containing the test statistics

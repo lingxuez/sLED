@@ -5,8 +5,8 @@
 \title{The sparse leading eigenvalue driven (sLED) test}
 \usage{
 sLED(X, Y, adj.beta = 0, rho = 1000, sumabs.seq = 0.2, npermute = 100,
-  seeds = NULL, verbose = TRUE, niter = 20, trace = FALSE,
-  useMC = FALSE, mc.cores = 1)
+  useMC = FALSE, mc.cores = 1, seeds = NULL, verbose = TRUE,
+  niter = 20, trace = FALSE)
 }
 \arguments{
 \item{X}{n1-by-p matrix for samples from the first population. 
@@ -27,6 +27,10 @@ each between \eqn{1/sqrt(p)} and 1.}
 
 \item{npermute}{number of permutations to use, default is 100}
 
+\item{useMC}{logical, whether to use multi-core version}
+
+\item{mc.cores}{a number indicating how many cores to use in parallelization}
+
 \item{seeds}{a numeric vector with the length equals to \code{npermute}, 
 where \code{seeds[i]} specifies the seeding for the i-th permutation. 
 Set to \code{NULL} if do not want to specify.}
@@ -36,10 +40,6 @@ Set to \code{NULL} if do not want to specify.}
 \item{niter}{the number of iterations to use in the PMD algorithm (see \code{symmPMD()})}
 
 \item{trace}{logical, whether to trace the progress of PMD algorithm (see \code{symmPMD()})}
-
-\item{useMC}{logical, whether to use multi-core version}
-
-\item{mc.cores}{a number indicating how many cores to use in parallelization}
 }
 \value{
 A list containing the following components:

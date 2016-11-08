@@ -4,7 +4,7 @@
 \alias{Chang.maxBoot.test}
 \title{Two-sample covariance test (Chang et al. 2016)}
 \usage{
-Chang.maxBoot.test(X, Y, nresample = 1000)
+Chang.maxBoot.test(X, Y, nresample = 1000, useMC = TRUE, mc.cores = 1)
 }
 \arguments{
 \item{X}{n1 by p matrix, observation of the first population, columns are features}
@@ -12,6 +12,11 @@ Chang.maxBoot.test(X, Y, nresample = 1000)
 \item{Y}{n2 by p matrix, observation of the second population, columns are features}
 
 \item{nresample}{the number of bootstraps to perform}
+
+\item{useMC}{logical variable indicating whether to use multicore parallelization.
+R packages \code{parallel} and \code{doParallel} are required if set to \code{TRUE}.}
+
+\item{mc.cores}{decide the number of cores to use when \code{useMC} is set to \code{TRUE}.}
 }
 \value{
 A list with the following components:

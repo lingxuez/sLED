@@ -4,7 +4,7 @@
 \alias{WL.randProj.test}
 \title{Two-sample covariance test (Wu and Li 2015)}
 \usage{
-WL.randProj.test(X, Y, nproj = 100)
+WL.randProj.test(X, Y, nproj = 100, useMC = FALSE, mc.cores = 1)
 }
 \arguments{
 \item{X}{n1 by p matrix, observation of the first population, columns are features}
@@ -12,6 +12,11 @@ WL.randProj.test(X, Y, nproj = 100)
 \item{Y}{n2 by p matrix, observation of the second population, columns are features}
 
 \item{nproj}{number of random projections to use}
+
+\item{useMC}{logical variable indicating whether to use multicore parallelization.
+R packages \code{parallel} and \code{doParallel} are required if set to \code{TRUE}.}
+
+\item{mc.cores}{decide the number of cores to use when \code{useMC} is set to \code{TRUE}.}
 }
 \value{
 A list containing the following components:
