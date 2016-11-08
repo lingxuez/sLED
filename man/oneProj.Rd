@@ -12,6 +12,12 @@ oneProj(i, Xsample, Ysample, n1, n2, p)
 \item{Xsample}{n1 by p matrix, observation of the first population, columns are features}
 
 \item{Ysample}{n2 by p matrix, observation of the second population, columns are features}
+
+\item{n1}{number of rows in Xsample}
+
+\item{n2}{number of rows in Ysample}
+
+\item{p}{number of columns}
 }
 \description{
 F-statistic in one random projection

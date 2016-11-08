@@ -15,7 +15,8 @@ Rows are samples/observations, while columns are the features.}
 
 \item{adj.beta}{Power to transform correlation matrices to weighted adjacency matrice
 by \eqn{A_{ij} = |r_ij|^adj.beta} where \eqn{r_ij} represents the Pearson correlation.
-adj.beta=0 indicates using the regular covariance marix.}
+When adj.beta=0, the correlation marix is used. 
+When adj.beta<0, the covariance matrix is used.}
 }
 \value{
 The p-by-p differential matrix \eqn{D = A(Y) - A(X)}
@@ -27,6 +28,6 @@ compute the differential matrix
 where A() is the covariance matrix, or the weighted adjacency matrices defined as
 \deqn{A_{ij} = |corr(i, j)|^b}
 for some constant b > 0, 1 <= i, j <= p.
-Let A represent the regular covaraince matrix when b=0.
+Let A represent the regular correlation matrix when b=0, and covariance matrix when b<0.
 }
 

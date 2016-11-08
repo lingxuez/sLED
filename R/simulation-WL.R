@@ -59,6 +59,9 @@ WL.randProj.test <- function(X, Y, nproj=100, useMC=FALSE, mc.cores=1) {
 #' @param i i-th repetition
 #' @param Xsample n1 by p matrix, observation of the first population, columns are features
 #' @param Ysample n2 by p matrix, observation of the second population, columns are features
+#' @param n1 number of rows in Xsample
+#' @param n2 number of rows in Ysample
+#' @param p number of columns
 #' 
 #' @seealso \code{WL.randProj.test()}.
 oneProj <- function(i, Xsample, Ysample, n1, n2, p) {

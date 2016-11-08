@@ -18,7 +18,8 @@ sLEDpermute(Z, n1, n2, adj.beta = 0, rho = 1000, sumabs.seq = 0.2,
 \item{adj.beta}{a positive number representing the power to transform correlation matrices 
 to weighted adjacency matrices by \eqn{A_{ij} = |r_ij|^adj.beta}, 
 where \eqn{r_ij} represents the Pearson correlation.
-When adj.beta=0, the regular covariance marix is used.}
+When adj.beta=0, the correlation marix is used. 
+When adj.beta<0, the covariance matrix is used.}
 
 \item{rho}{a large positive constant such that \eqn{A(X)-A(Y)+diag(rep(rho, p))} is positive definite.}
 
@@ -40,8 +41,6 @@ Set to \code{NULL} if do not want to specify.}
 \item{niter}{the number of iterations to use in the PMD algorithm (see \code{symmPMD()})}
 
 \item{trace}{whether to trace the progress of PMD algorithm (see \code{symmPMD()})}
-
-\item{ncore}{the number of cores to use}
 }
 \value{
 A list containing the following components:

@@ -4,7 +4,7 @@
 \alias{sLED}
 \title{The sparse leading eigenvalue driven (sLED) test}
 \usage{
-sLED(X, Y, adj.beta = 0, rho = 1000, sumabs.seq = 0.2, npermute = 100,
+sLED(X, Y, adj.beta = 0, rho = 1000, sumabs.seq = 0.1, npermute = 100,
   useMC = FALSE, mc.cores = 1, seeds = NULL, verbose = TRUE,
   niter = 20, trace = FALSE)
 }
@@ -18,7 +18,8 @@ Rows are samples/observations, while columns are the features.}
 \item{adj.beta}{a positive number representing the power to transform correlation matrices 
 to weighted adjacency matrices by \eqn{A_{ij} = |r_ij|^adj.beta}, 
 where \eqn{r_ij} represents the Pearson correlation.
-When adj.beta=0, the covariance marix is used.}
+When adj.beta=0, the correlation marix is used. 
+When adj.beta<0, the covariance matrix is used.}
 
 \item{rho}{a large positive constant such that \eqn{A(X)-A(Y)+diag(rep(rho, p))} is positive definite.}
 
@@ -72,7 +73,8 @@ sLED tests the following hypothesis:
 where A() represents some p-by-p relationship matrix among features, including covariance matrices, 
 correlation matrices, or the weighted adjacency matrices defined as
 \deqn{A_{ij} = |corr(i, j)|^b}
-for some constant b > 0, 1 <= i, j <= p.
+for some constant b > 0, 1 <= i, j <= p. 
+Let A represent the regular correlation matrix when b=0, and covariance matrix when b<0.
 }
 \references{
 Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, 

@@ -7,6 +7,8 @@
 oneBootstrapStat(i, X.center, Y.center, n1, n2, sigma.x, sigma.y, Tdenominator)
 }
 \arguments{
+\item{i}{i-th bootstrap}
+
 \item{X.center}{n1 by p matrix, observation of the first population, 
 columns are centered features}
 

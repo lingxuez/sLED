@@ -103,6 +103,7 @@ Chang.wildBootstrap <- function(X, Y, sigma.x, sigma.y, Tdenominator, nresample=
 #'
 #' @description Helper function for \code{Chang.wildBootstrap()}.
 #' 
+#' @param i i-th bootstrap
 #' @param X.center n1 by p matrix, observation of the first population, 
 #'        columns are centered features
 #' @param Y.center n2 by p matrix, observation of the second population, 

@@ -11,6 +11,7 @@
 #' correlation matrices, or the weighted adjacency matrices defined as
 #' \deqn{A_{ij} = |corr(i, j)|^b}
 #' for some constant b > 0, 1 <= i, j <= p. 
+#' Let A represent the regular correlation matrix when b=0, and covariance matrix when b<0.
 #' 
 #' @param X n1-by-p matrix for samples from the first population. 
 #'        Rows are samples/observations, while columns are the features.
@@ -19,7 +20,8 @@
 #' @param adj.beta a positive number representing the power to transform correlation matrices 
 #'        to weighted adjacency matrices by \eqn{A_{ij} = |r_ij|^adj.beta}, 
 #'        where \eqn{r_ij} represents the Pearson correlation.
-#'        When adj.beta=0, the covariance marix is used.
+#'        When adj.beta=0, the correlation marix is used. 
+#'        When adj.beta<0, the covariance matrix is used.
 #' @param rho a large positive constant such that \eqn{A(X)-A(Y)+diag(rep(rho, p))} is positive definite.
 #' @param sumabs.seq a numeric vector specifing the sequence of sparsity parameters to use, 
 #'        each between \eqn{1/sqrt(p)} and 1.
@@ -58,7 +60,7 @@
 #' 
 #' @seealso \code{symmPMD()}.
 #' @export
-sLED <- function(X, Y, adj.beta=0, rho=1000, sumabs.seq=0.2, npermute=100, 
+sLED <- function(X, Y, adj.beta=0, rho=1000, sumabs.seq=0.1, npermute=100, 
                  useMC=FALSE, mc.cores=1, seeds=NULL, verbose=TRUE, niter=20, trace=FALSE) {
   
   # # center observations
@@ -81,7 +83,7 @@ sLED <- function(X, Y, adj.beta=0, rho=1000, sumabs.seq=0.2, npermute=100,
                                  verbose=verbose, niter=niter, trace=trace)
 
   ## p-value
-  pVal = rowSums(Tn > permute.results$Tn.permute) / npermute
+  pVal = rowSums(permute.results$Tn.permute > Tn) / npermute
   
   return(c(pma.results, permute.results, list(Tn = Tn, pVal = pVal)))
 }
@@ -174,7 +176,7 @@ sLEDTestStat <- function(Dmat, rho=1000, sumabs.seq=0.2,
 #' where A() is the covariance matrix, or the weighted adjacency matrices defined as
 #' \deqn{A_{ij} = |corr(i, j)|^b}
 #' for some constant b > 0, 1 <= i, j <= p.
-#' Let A represent the regular covaraince matrix when b=0.
+#' Let A represent the regular correlation matrix when b=0, and covariance matrix when b<0.
 #'
 #' @param X n1-by-p matrix for samples from the first population. 
 #'        Rows are samples/observations, while columns are the features.
@@ -182,12 +184,15 @@ sLEDTestStat <- function(Dmat, rho=1000, sumabs.seq=0.2,
 #'        Rows are samples/observations, while columns are the features.
 #' @param adj.beta Power to transform correlation matrices to weighted adjacency matrice
 #'        by \eqn{A_{ij} = |r_ij|^adj.beta} where \eqn{r_ij} represents the Pearson correlation.
-#'        adj.beta=0 indicates using the regular covariance marix.
+#'        When adj.beta=0, the correlation marix is used. 
+#'        When adj.beta<0, the covariance matrix is used.
 #'      
 #' @return The p-by-p differential matrix \eqn{D = A(Y) - A(X)}
 getDiffMatrix <- function(X, Y, adj.beta) {
-  if (adj.beta == 0) {
+  if (adj.beta < 0) {
     Dmat <- cov(Y) - cov(X)
+  } else if (adj.beta == 0) {
+    Dmat <- cor(Y) - cor(X)
   } else {
     Dmat <- abs(cor(Y))^adj.beta - abs(cor(X))^adj.beta
   }
