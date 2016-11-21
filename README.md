@@ -1,7 +1,7 @@
-# sLED: A two-sample test for high-dimensional differential matrices
+# sLED: A two-sample test for high-dimensional covariance matrices
 
 This is the R Code for
-> Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, with Application to Detecting Schizophrenia Risk Genes", [arXiv:1606.00252](https://arxiv.org/abs/1606.00252).
+> Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Covariance Matrices, with Application to Detecting Schizophrenia Risk Genes", [arXiv:1606.00252](https://arxiv.org/abs/1606.00252).
 
 Pease cite sLED in your publication if it helps your research:
 ```
@@ -17,15 +17,15 @@ Pease cite sLED in your publication if it helps your research:
 Suppose X, Y are p-dimensional random vectors independently coming from two populations.
 Let D be the differential matrix
 
-D = A(Y) - A(X)
-
-where A() is some p-by-p relationship matrix among features in the two populations, including the covariance matrices and correlation matrices. 
+D = cov(Y) - cov(X)
 
 The goal for sLED is to test the following hypothesis:
 
 H_0: D=0 versus H_1: D \neq 0
 
 and to identify the non-zero entries if the null hypothesis is rejected. sLED is more powerful than many existing two-sample testing procedures for high-dimensional covariance matrices (that is, when p is larger than the sample sizes), even when the signal is both weak and sparse.
+
+sLED can also be used to compare other p-by-p relationship matrices, including correlation matrices and weighted adjacency matrices. 
 
 
 ## Installation
@@ -34,21 +34,6 @@ This package can be installed through `devtools` in R:
 install.packages("devtools") ## if not installed
 library("devtools")
 devtools::install_github("lingxuez/sLED")
-```
-
-Alternatively, you can download the files, open the terminal, go to the directory that contains the package directory, and use
-```
-$ R CMD build sLED
-* checking for file ‘sLED/DESCRIPTION’ ... OK
-* preparing ‘sLED’:
-* checking DESCRIPTION meta-information ... OK
-* checking for LF line-endings in source and make files
-* checking for empty or unneeded directories
-* building ‘sLED_0.0.0.9000.tar.gz’
-```
-and you should have the file `sLED_0.0.0.9000.tar.gz` in the directory. Now run
-```
-R CMD INSTALL sLED_0.0.0.9000.tar.gz
 ```
 
 
@@ -140,6 +125,13 @@ The test can get computationally expensive with large number of permutations. Fo
 result_multicore <- sLED(X=X, Y=Y, npermute=1000, useMC=TRUE, mc.cores=2)
 ```
 Please note that you need to have R packages `doParallel` and `parallel` installed.
+
+
+## Simulations
+We provide the code to re-produce the simulation results in the paper. Please refer to the R script
+
+> simulations/simulate.R
+
 
 ## Tests
 This package is still under developement, and has only been tested on Mac OS X 10.11.6.
