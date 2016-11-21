@@ -6,7 +6,7 @@ This is the R Code for
 Pease cite sLED in your publication if it helps your research:
 ```
 @article{zhu2016testing,
-    title={Testing High Dimensional Differential Matrices, with Application to Detecting Schizophrenia Risk Genes},
+    title={Testing High Dimensional Covariance Matrices, with Application to Detecting Schizophrenia Risk Genes},
     author={Zhu, Lingxue and Lei, Jing and Devlin, Bernie and Roeder, Kathryn},
     journal={arXiv preprint arXiv:1606.00252},
     year={2016}
@@ -15,15 +15,15 @@ Pease cite sLED in your publication if it helps your research:
 
 ## A short introduction to sLED
 Suppose X, Y are p-dimensional random vectors independently coming from two populations.
-Let D be the differential matrix
+Let `D` be the differential matrix
 
-D = cov(Y) - cov(X)
+> D = cov(Y) - cov(X)
 
 The goal for sLED is to test the following hypothesis:
 
-H_0: D=0 versus H_1: D \neq 0
+> H_0: D=0 versus H_1: D \neq 0
 
-and to identify the non-zero entries if the null hypothesis is rejected. sLED is more powerful than many existing two-sample testing procedures for high-dimensional covariance matrices (that is, when p is larger than the sample sizes), even when the signal is both weak and sparse.
+and to identify the non-zero entries in `D` if the null hypothesis is rejected. sLED is more powerful than many existing two-sample testing procedures for high-dimensional covariance matrices (that is, when the dimension of features `p` is larger than the sample sizes), even when the signal is both weak and sparse.
 
 sLED can also be used to compare other p-by-p relationship matrices, including correlation matrices and weighted adjacency matrices. 
 
@@ -128,7 +128,7 @@ Please note that you need to have R packages `doParallel` and `parallel` install
 
 
 ## Simulations
-We provide the code to re-produce the simulation results in the paper. Please refer to the R script
+We provide the code to re-produce the simulation results in Section 3 of the paper. Please refer to the R script
 
 > simulations/simulate.R
 
