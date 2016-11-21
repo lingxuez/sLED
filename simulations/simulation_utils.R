@@ -106,11 +106,9 @@ simulate.samples <- function(n1, n2, p, gamma.1, gamma.2, sample.dist="normal") 
 #' \item{gamma.1}{The square root of covariance matrix under null hypothesis.}
 #' \item{gamma.2}{The square root of covariance matrix under alternative hypothesis.}
 get.cov.matrix <- function(p, cov.method="block.diag", diff.method="block",
-                           theta=5, s=NULL,
-                           eigengenes=NULL, maxCor=0.9, modProportions=NULL ## for wgcna
-                           ) {
+                           theta=0.5, s=1) {
   ## base matrix
-  sigma.1 <- get.base.matrix(p, cov.method, eigengenes, maxCor, modProportions)
+  sigma.1 <- get.base.matrix(p, cov.method)
   diff.matrix <- get.diff.matrix(p=p, diff.method=diff.method, theta=theta, 
                                  max.var=max(abs(diag(sigma.1))), s=s)
   sigma.2 <- sigma.1 + diff.matrix 
@@ -158,9 +156,7 @@ get.matrix.sqrt <- function(A) {
 #' }
 #' @return A \eqn{p} by \eqn{p} base matrix, which will be used
 #' to generate the covariance matrix. 
-get.base.matrix <- function(p, cov.method="block.diag",
-                            eigengenes=NULL, maxCor=0.9, modProportions=NULL ## for wgcna
-                            ) {
+get.base.matrix <- function(p, cov.method="block.diag") {
   
   if (cov.method == "block.diag") {
     ## parameter: block size and entries in block

@@ -72,7 +72,7 @@ if (p >= 100) {
 } else {
   ## Note that the parameter $c$ must satisfy
   ## $c \sqrt{p} >= 1$, so $c=0.1$ is not valid when $p<100$.
-  stop("p too small.")
+  stop("p is too small for c=0.1.")
 }
 
 
@@ -80,8 +80,7 @@ if (p >= 100) {
 ## Generate covariance matrices
 #######################
 cov.matrices <- get.cov.matrix(p=p, cov.method=cov.method,
-            diff.method=diff.method, theta=theta, s=s,
-            eigengenes=eigengenes, maxCor=maxCor, modProportions=modProportions)
+            diff.method=diff.method, theta=theta, s=s)
 
 #######################
 ## Simulations
