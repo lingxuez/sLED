@@ -4,8 +4,9 @@
 \alias{sLEDOnePermute}
 \title{One permutation of sLED}
 \usage{
-sLEDOnePermute(i, Z, n1, n2, seeds = NULL, sumabs.seq = 0.2, adj.beta = 0,
-  rho = 1000, verbose = TRUE, niter = 20, trace = FALSE)
+sLEDOnePermute(i, Z, n1, n2, seeds = NULL, sumabs.seq = 0.2,
+  adj.beta = -1, rho = 1000, verbose = TRUE, niter = 20,
+  trace = FALSE)
 }
 \arguments{
 \item{i}{the i-th permutation}
@@ -25,8 +26,9 @@ each between \eqn{1/sqrt(p)} and 1.}
 \item{adj.beta}{a positive number representing the power to transform correlation matrices 
 to weighted adjacency matrices by \eqn{A_{ij} = |r_ij|^adj.beta}, 
 where \eqn{r_ij} represents the Pearson correlation.
-When adj.beta=0, the regular correlation marix \eqn{(r_ij)} is used.
-When adj.beta<0, the covariance matrix is used.}
+When \code{adj.beta=0}, the correlation marix is used. 
+When \code{adj.beta<0}, the covariance matrix is used.
+The default value is \code{adj.beta=-1}.}
 
 \item{rho}{a large positive constant such that \eqn{A(X)-A(Y)+diag(rep(rho, p))} is positive definite.}
 
@@ -39,7 +41,8 @@ When adj.beta<0, the covariance matrix is used.}
 \value{
 A list containing the following components:
  \item{Tn.permute}{A number represents the test statistic in this permutation.}
- \item{Tn.permute.sign}{A string, "pos" if the test statistic is given by sEig(D), and "neg" if is given by sEig(-D),
+ \item{Tn.permute.sign}{A string, "pos" if the test statistic is given by sEig(D), 
+       and "neg" if is given by sEig(-D),
        where \code{sEig} denotes the sparse leading eigenvalue.}
 }
 \description{

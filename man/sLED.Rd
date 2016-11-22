@@ -18,8 +18,9 @@ Rows are samples/observations, while columns are the features.}
 \item{adj.beta}{a positive number representing the power to transform correlation matrices 
 to weighted adjacency matrices by \eqn{A_{ij} = |r_ij|^adj.beta}, 
 where \eqn{r_ij} represents the Pearson correlation.
-When adj.beta=0, the correlation marix is used. 
-When adj.beta<0, the covariance matrix is used.}
+When \code{adj.beta=0}, the correlation marix is used. 
+When \code{adj.beta<0}, the covariance matrix is used.
+The default value is \code{adj.beta=-1}.}
 
 \item{rho}{a large positive constant such that \eqn{A(X)-A(Y)+diag(rep(rho, p))} is positive definite.}
 
@@ -46,10 +47,13 @@ Set to \code{NULL} if do not want to specify.}
 A list containing the following components:
  \item{Tn}{the test statistic}
  \item{Tn.perm}{the test statistic for permuted samples}
- \item{Tn.perm.sign}{the sign for permuted samples: "pos" if the permuted test statistic is given by sEig(D), 
-         and "neg" if is given by sEig(-D)}
+ \item{Tn.perm.sign}{the sign for permuted samples: 
+         "pos" if the permuted test statistic is given by sEig(D), 
+         and "neg" if is given by sEig(-D),
+         where \code{sEig} denotes the sparse leading eigenvalue.}
  \item{pVal}{the p-value of sLED test}  
- \item{sumabs.seq}{a numeric vector for a sequence of sparsity parameters. Default is 0.2.}
+ \item{sumabs.seq}{a numeric vector for a sequence of sparsity parameters. Default is 0.2.
+             The numbers must be between \eqn{1/sqrt{p}} and 1.}
  \item{rho}{a positive constant to augment the diagonal of the differential matrix \eqn{D}
            such that \eqn{D + rho*I} becomes positive definite.}
  \item{stats}{a numeric vector of test statistics when using different sparsity parameters
@@ -59,7 +63,7 @@ A list containing the following components:
          where \code{sEig} denotes the sparse leading eigenvalue.}
  \item{v}{the sequence of sparse leading eigenvectors, each row corresponds to one sparsity 
          parameter given by \code{sumabs.seq}.}
- \item{leverage}{the leverage score for genes (defined as \eqn{v^2} element-wise) using 
+ \item{leverage}{the leverage of genes (defined as \eqn{v^2} element-wise) using 
          different sparsity parameters. Each row corresponds to one sparsity 
          parameter given by \code{sumabs.seq}.}
 }
@@ -77,7 +81,7 @@ for some constant b > 0, 1 <= i, j <= p.
 Let A represent the regular correlation matrix when b=0, and covariance matrix when b<0.
 }
 \references{
-Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, 
+Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Covariance Matrices, 
 with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
 }
 \seealso{

@@ -37,7 +37,7 @@ The algorithm uses an iterative procedure similar to the R Package "PMA", but sp
 using the extra constraint that the decomposition is symmetric.
 }
 \references{
-Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, 
+Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Covariance Matrices, 
 with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
 
 Witten, Tibshirani and Hastie (2009), "A penalized matrix decomposition, 

@@ -4,7 +4,7 @@
 \alias{getDiffMatrix}
 \title{The differential matrix}
 \usage{
-getDiffMatrix(X, Y, adj.beta)
+getDiffMatrix(X, Y, adj.beta = -1)
 }
 \arguments{
 \item{X}{n1-by-p matrix for samples from the first population. 
@@ -15,8 +15,9 @@ Rows are samples/observations, while columns are the features.}
 
 \item{adj.beta}{Power to transform correlation matrices to weighted adjacency matrice
 by \eqn{A_{ij} = |r_ij|^adj.beta} where \eqn{r_ij} represents the Pearson correlation.
-When adj.beta=0, the correlation marix is used. 
-When adj.beta<0, the covariance matrix is used.}
+When \code{adj.beta=0}, the correlation marix is used. 
+When \code{adj.beta<0}, the covariance matrix is used.
+The default value is \code{adj.beta=-1}.}
 }
 \value{
 The p-by-p differential matrix \eqn{D = A(Y) - A(X)}

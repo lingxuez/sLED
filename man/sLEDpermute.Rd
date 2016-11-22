@@ -4,7 +4,7 @@
 \alias{sLEDpermute}
 \title{sLED permutation}
 \usage{
-sLEDpermute(Z, n1, n2, adj.beta = 0, rho = 1000, sumabs.seq = 0.2,
+sLEDpermute(Z, n1, n2, adj.beta = -1, rho = 1000, sumabs.seq = 0.2,
   npermute = 100, useMC = FALSE, mc.cores = 1, seeds = NULL,
   verbose = TRUE, niter = 20, trace = FALSE)
 }
@@ -18,8 +18,9 @@ sLEDpermute(Z, n1, n2, adj.beta = 0, rho = 1000, sumabs.seq = 0.2,
 \item{adj.beta}{a positive number representing the power to transform correlation matrices 
 to weighted adjacency matrices by \eqn{A_{ij} = |r_ij|^adj.beta}, 
 where \eqn{r_ij} represents the Pearson correlation.
-When adj.beta=0, the correlation marix is used. 
-When adj.beta<0, the covariance matrix is used.}
+When \code{adj.beta=0}, the correlation marix is used. 
+When \code{adj.beta<0}, the covariance matrix is used.
+The default value is \code{adj.beta=-1}.}
 
 \item{rho}{a large positive constant such that \eqn{A(X)-A(Y)+diag(rep(rho, p))} is positive definite.}
 
@@ -53,7 +54,7 @@ A list containing the following components:
 Get the sLED test statistic on permuted samples.
 }
 \references{
-Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, 
+Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Covariance Matrices, 
 with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
 }
 \seealso{

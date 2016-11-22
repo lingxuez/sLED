@@ -41,13 +41,13 @@ Calculate the sLED test statistic given a differential matrix \eqn{D}.
 A differential matrix is the difference between two symmetric relationship matrices.
 For any symmetric differential matrix \eqn{D}, sLED test statistic is defined as
 \deqn{max{ sEig(D), sEig(-D) }}
-where sEig() is the sparse leading eigenvalue, defined as
+where \code{sEig()} is the sparse leading eigenvalue, defined as
 \deqn{$max_{v} v^T A v$}{max_{v} t(v)*A*v}
 subject to
 \eqn{$||v||_2 \leq 1, ||v||_1 \leq s$}{||v||_2 <= 1, ||v||_1 <= s}.
 }
 \references{
-Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, 
+Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Covariance Matrices, 
 with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
 }
 \seealso{
