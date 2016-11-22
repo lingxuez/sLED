@@ -20,8 +20,9 @@
 #' @param adj.beta a positive number representing the power to transform correlation matrices 
 #'        to weighted adjacency matrices by \eqn{A_{ij} = |r_ij|^adj.beta}, 
 #'        where \eqn{r_ij} represents the Pearson correlation.
-#'        When adj.beta=0, the correlation marix is used. 
-#'        When adj.beta<0, the covariance matrix is used.
+#'        When \code{adj.beta=0}, the correlation marix is used. 
+#'        When \code{adj.beta<0}, the covariance matrix is used.
+#'        The default value is \code{adj.beta=-1}.
 #' @param rho a large positive constant such that \eqn{A(X)-A(Y)+diag(rep(rho, p))} is positive definite.
 #' @param sumabs.seq a numeric vector specifing the sequence of sparsity parameters to use, 
 #'        each between \eqn{1/sqrt(p)} and 1.
@@ -38,10 +39,13 @@
 #' @return A list containing the following components:
 #'  \item{Tn}{the test statistic}
 #'  \item{Tn.perm}{the test statistic for permuted samples}
-#'  \item{Tn.perm.sign}{the sign for permuted samples: "pos" if the permuted test statistic is given by sEig(D), 
-#'          and "neg" if is given by sEig(-D)}
+#'  \item{Tn.perm.sign}{the sign for permuted samples: 
+#'          "pos" if the permuted test statistic is given by sEig(D), 
+#'          and "neg" if is given by sEig(-D),
+#'          where \code{sEig} denotes the sparse leading eigenvalue.}
 #'  \item{pVal}{the p-value of sLED test}  
-#'  \item{sumabs.seq}{a numeric vector for a sequence of sparsity parameters. Default is 0.2.}
+#'  \item{sumabs.seq}{a numeric vector for a sequence of sparsity parameters. Default is 0.2.
+#'              The numbers must be between \eqn{1/sqrt{p}} and 1.}
 #'  \item{rho}{a positive constant to augment the diagonal of the differential matrix \eqn{D}
 #'            such that \eqn{D + rho*I} becomes positive definite.}
 #'  \item{stats}{a numeric vector of test statistics when using different sparsity parameters
@@ -51,22 +55,18 @@
 #'          where \code{sEig} denotes the sparse leading eigenvalue.}
 #'  \item{v}{the sequence of sparse leading eigenvectors, each row corresponds to one sparsity 
 #'          parameter given by \code{sumabs.seq}.}
-#'  \item{leverage}{the leverage score for genes (defined as \eqn{v^2} element-wise) using 
+#'  \item{leverage}{the leverage of genes (defined as \eqn{v^2} element-wise) using 
 #'          different sparsity parameters. Each row corresponds to one sparsity 
 #'          parameter given by \code{sumabs.seq}.}
 #' 
-#' @references Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, 
+#' @references Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Covariance Matrices, 
 #' with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
 #' 
 #' @seealso \code{symmPMD()}.
 #' @export
 sLED <- function(X, Y, adj.beta=-1, rho=1000, sumabs.seq=0.2, npermute=100, 
                  useMC=FALSE, mc.cores=1, seeds=NULL, verbose=TRUE, niter=20, trace=FALSE) {
-  
-  # # center observations
-  # X <- scale(X, center=TRUE, scale=FALSE)
-  # Y <- scale(Y, center=TRUE, scale=FALSE)
-  
+
   # test statistic
   D.hat <- getDiffMatrix(X, Y, adj.beta)  
   pma.results <- sLEDTestStat(Dmat=D.hat, rho=rho,
@@ -96,7 +96,7 @@ sLED <- function(X, Y, adj.beta=-1, rho=1000, sumabs.seq=0.2, npermute=100,
 #' A differential matrix is the difference between two symmetric relationship matrices.
 #' For any symmetric differential matrix \eqn{D}, sLED test statistic is defined as
 #' \deqn{max{ sEig(D), sEig(-D) }}
-#' where sEig() is the sparse leading eigenvalue, defined as
+#' where \code{sEig()} is the sparse leading eigenvalue, defined as
 #' \deqn{$max_{v} v^T A v$}{max_{v} t(v)*A*v}
 #' subject to
 #' \eqn{$||v||_2 \leq 1, ||v||_1 \leq s$}{||v||_2 <= 1, ||v||_1 <= s}. 
@@ -124,7 +124,7 @@ sLED <- function(X, Y, adj.beta=-1, rho=1000, sumabs.seq=0.2, npermute=100,
 #'          different sparsity parameters. Each row corresponds to one sparsity 
 #'          parameter given by \code{sumabs.seq}.}
 #' 
-#' @references Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, 
+#' @references Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Covariance Matrices, 
 #' with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
 #' 
 #' @seealso \code{sLED()}.
@@ -184,11 +184,12 @@ sLEDTestStat <- function(Dmat, rho=1000, sumabs.seq=0.2,
 #'        Rows are samples/observations, while columns are the features.
 #' @param adj.beta Power to transform correlation matrices to weighted adjacency matrice
 #'        by \eqn{A_{ij} = |r_ij|^adj.beta} where \eqn{r_ij} represents the Pearson correlation.
-#'        When adj.beta=0, the correlation marix is used. 
-#'        When adj.beta<0, the covariance matrix is used.
+#'        When \code{adj.beta=0}, the correlation marix is used. 
+#'        When \code{adj.beta<0}, the covariance matrix is used.
+#'        The default value is \code{adj.beta=-1}.
 #'      
 #' @return The p-by-p differential matrix \eqn{D = A(Y) - A(X)}
-getDiffMatrix <- function(X, Y, adj.beta) {
+getDiffMatrix <- function(X, Y, adj.beta=-1) {
   if (adj.beta < 0) {
     Dmat <- cov(Y) - cov(X)
   } else if (adj.beta == 0) {

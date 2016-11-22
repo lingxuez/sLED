@@ -14,9 +14,9 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-    rARPACK
-Suggests:
-    testthat,
+    rARPACK,
     parallel,
     doParallel
+Suggests:
+    testthat
 RoxygenNote: 5.0.1

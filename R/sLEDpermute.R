@@ -8,8 +8,9 @@
 #' @param adj.beta a positive number representing the power to transform correlation matrices 
 #'        to weighted adjacency matrices by \eqn{A_{ij} = |r_ij|^adj.beta}, 
 #'        where \eqn{r_ij} represents the Pearson correlation.
-#'        When adj.beta=0, the correlation marix is used. 
-#'        When adj.beta<0, the covariance matrix is used.
+#'        When \code{adj.beta=0}, the correlation marix is used. 
+#'        When \code{adj.beta<0}, the covariance matrix is used.
+#'        The default value is \code{adj.beta=-1}.
 #' @param rho a large positive constant such that \eqn{A(X)-A(Y)+diag(rep(rho, p))} is positive definite.
 #' @param sumabs.seq a numeric vector specifing the sequence of sparsity parameters to use, 
 #'        each between \eqn{1/sqrt(p)} and 1.
@@ -29,11 +30,11 @@
 #'      "pos" if the permuted test statistic is given by sEig(D), and "neg" if is given by sEig(-D),
 #'      where \code{sEig} denotes the sparse leading eigenvalue.}
 #'          
-#' @references Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, 
+#' @references Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Covariance Matrices, 
 #' with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
 #' 
 #' @seealso \code{sLED()}.
-sLEDpermute <- function(Z, n1, n2, adj.beta=0, rho=1000,
+sLEDpermute <- function(Z, n1, n2, adj.beta=-1, rho=1000,
                         sumabs.seq=0.2, npermute=100, 
                         useMC=FALSE, mc.cores=1, seeds=NULL, verbose=TRUE, niter=20, trace=FALSE) {
   ## permutation
@@ -62,14 +63,12 @@ sLEDpermute <- function(Z, n1, n2, adj.beta=0, rho=1000,
                                        adj.beta=adj.beta, rho=rho,
                                        verbose=verbose, niter=niter, trace=trace)
   }
-  # print(perm.results)
   
   ## extract test statistics and signs
   ntest <- length(sumabs.seq)
   Tn.permute <- matrix(NA, nrow=ntest, ncol=npermute)
   Tn.permute.sign <- matrix(NA, nrow=ntest, ncol=npermute)
   for (i in 1:npermute) {
-    # cat(i, perm.results[[i]]$Tn.permute)
     Tn.permute[, i] <- perm.results[[i]]$Tn.permute
     Tn.permute.sign[, i] <- perm.results[[i]]$Tn.permute.sign
   } 
@@ -107,8 +106,9 @@ permuteIndex <- function(n1, n2){
 #' @param adj.beta a positive number representing the power to transform correlation matrices 
 #'        to weighted adjacency matrices by \eqn{A_{ij} = |r_ij|^adj.beta}, 
 #'        where \eqn{r_ij} represents the Pearson correlation.
-#'        When adj.beta=0, the regular correlation marix \eqn{(r_ij)} is used.
-#'        When adj.beta<0, the covariance matrix is used.
+#'        When \code{adj.beta=0}, the correlation marix is used. 
+#'        When \code{adj.beta<0}, the covariance matrix is used.
+#'        The default value is \code{adj.beta=-1}.
 #' @param rho a large positive constant such that \eqn{A(X)-A(Y)+diag(rep(rho, p))} is positive definite.
 #' @param sumabs.seq a numeric vector specifing the sequence of sparsity parameters to use, 
 #'        each between \eqn{1/sqrt(p)} and 1.
@@ -120,12 +120,13 @@ permuteIndex <- function(n1, n2){
 #' 
 #' @return A list containing the following components:
 #'  \item{Tn.permute}{A number represents the test statistic in this permutation.}
-#'  \item{Tn.permute.sign}{A string, "pos" if the test statistic is given by sEig(D), and "neg" if is given by sEig(-D),
+#'  \item{Tn.permute.sign}{A string, "pos" if the test statistic is given by sEig(D), 
+#'        and "neg" if is given by sEig(-D),
 #'        where \code{sEig} denotes the sparse leading eigenvalue.}
 #'        
 #' @seealso \code{sLEDpermute()}.
 sLEDOnePermute <- function(i, Z, n1, n2, 
-                           seeds=NULL, sumabs.seq=0.2, adj.beta=0, rho=1000,
+                           seeds=NULL, sumabs.seq=0.2, adj.beta=-1, rho=1000,
                            verbose=TRUE, niter=20, trace=FALSE) {
   if (!is.null(seeds)){
     set.seed(seeds[i])

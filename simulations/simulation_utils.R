@@ -1,5 +1,4 @@
 #' Helper functions to simulate data
-library(rARPACK)
 
 #' Simulate samples
 #' 
@@ -100,6 +99,8 @@ simulate.samples <- function(n1, n2, p, gamma.1, gamma.2, sample.dist="normal") 
 #' \tabular{ll}{
 #' "block" \tab \code{diff.matrix} is non-zero in an s-by-s sub-block,
 #'              with entries generated from uniform distribution.\cr
+#' "spiked" \tab \code{diff.matrix} is non-zero in (2s)-by-(2s) sub-block,
+#'              with larger entries in an s-by-s sub-block.             
 #' }
 #'    
 #' @return A list of two square root of covariance matrix:
@@ -240,7 +241,7 @@ adj.base.matrix <- function(base.matrix.1, base.matrix.2=NULL) {
 #' \tabular{ll}{
 #' "block" \tab \code{diff.matrix} is non-zero in an s-by-s sub-block,
 #'              with entries generated from uniform distribution.\cr
-#' "spike" \tab \code{diff.matrix} is non-zero in (2s)-by-(2s) sub-block,
+#' "spiked" \tab \code{diff.matrix} is non-zero in (2s)-by-(2s) sub-block,
 #'              with larger entries in an s-by-s sub-block.
 #' }
 #' 
@@ -256,7 +257,7 @@ get.diff.matrix <- function(p, diff.method, theta=1, max.var=1, s=2) {
     diff.matrix <- matrix(0, nrow=p, ncol=p)
     diff.matrix[1:s, 1:s] <- signal
 
-  } else if (diff.method == "spike") {
+  } else if (diff.method == "spiked") {
     ## unit vector
     v <- rep(0, p)
     v[1:(2*s)] <- rnorm(2*s, mean=0.1, sd=0.1) ## weak signals

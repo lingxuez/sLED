@@ -24,7 +24,7 @@
 #'  \item{d}{the sparse leading eigenvalue \eqn{$d=v^T A v$}{d=t(v)*A*v }}
 #'  \item{sumabs}{sumabs*\eqn{$sqrt(p)$}{sqrt(p)} is the upperbound of the L_1 norm of \eqn{$v$}{v}}
 #' 
-#' @references Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Differential Matrices, 
+#' @references Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Covariance Matrices, 
 #' with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.
 #' @references Witten, Tibshirani and Hastie (2009), "A penalized matrix decomposition, 
 #' with applications to sparse principal components and canonical correlation analysis", Biostatistics 10(3):515-534.
