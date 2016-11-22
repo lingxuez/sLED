@@ -80,6 +80,45 @@ correlation matrices, or the weighted adjacency matrices defined as
 for some constant b > 0, 1 <= i, j <= p. 
 Let A represent the regular correlation matrix when b=0, and covariance matrix when b<0.
 }
+\details{
+For large data sets, the multi-core version is recommended:
+\code{useMC=TRUE} and \code{mc.cores=n}, where \code{n} is the number of cores to use.
+}
+\examples{
+# Run sLED on a synthetic dataset under the null hypothesis
+# where cov(X) = cov(Y)
+n <- 50
+p <- 100
+set.seed(99)
+X <- matrix(rnorm(n*p, mean=0, sd=1), nrow=n, ncol=p)
+set.seed(42)
+Y <- matrix(rnorm(n*p, mean=0, sd=1), nrow=n, ncol=p)
+
+# run sLED and check the p-value
+result <- sLED(X=X, Y=Y, npermute=50)
+result$pVal
+
+
+# Run sLED on a synthetic dataset under the alternative hypothesis
+# where cov(X) != cov(Y), and the difference occur at the first 10 coordinates
+n <- 50
+p <- 100
+set.seed(99)
+X <- matrix(rnorm(n*p, mean=0, sd=1), nrow=n, ncol=p)
+s <- 10 ## signals
+sigma.2 <- diag(p)
+sigma.2[1:s, 1:s] <- sigma.2[1:s, 1:s] + 0.2
+set.seed(42)
+Y2 <- MASS::mvrnorm(n, mu=rep(0, p), Sigma=sigma.2)
+
+# run sLED and check the p-value
+result <- sLED(X=X, Y=Y2, sumabs.seq=0.25, npermute=100, seeds = c(1:100))
+result$pVal
+
+# the signalling coordinates detected by sLED
+which(result$leverage != 0)
+
+}
 \references{
 Zhu, Lei, Devlin and Roeder (2016), "Testing High Dimensional Covariance Matrices, 
 with Application to Detecting Schizophrenia Risk Genes", arXiv:1606.00252.

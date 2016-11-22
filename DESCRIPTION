@@ -16,7 +16,8 @@ LazyData: true
 Imports:
     rARPACK,
     parallel,
-    doParallel
+    doParallel,
+    MASS
 Suggests:
     testthat
 RoxygenNote: 5.0.1

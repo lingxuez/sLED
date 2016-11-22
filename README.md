@@ -14,18 +14,18 @@ Pease cite sLED in your publication if it helps your research:
 ```
 
 ## A short introduction to sLED
-Suppose X, Y are p-dimensional random vectors independently coming from two populations.
+Suppose `X`, `Y` are `p`-dimensional random vectors independently coming from two populations.
 Let `D` be the differential matrix
 
 > D = cov(Y) - cov(X)
 
 The goal for sLED is to test the following hypothesis:
 
-> H_0: D=0 versus H_1: D \neq 0
+> H_0: D = 0 versus H_1: D != 0
 
 and to identify the non-zero entries in `D` if the null hypothesis is rejected. sLED is more powerful than many existing two-sample testing procedures for high-dimensional covariance matrices (that is, when the dimension of features `p` is larger than the sample sizes), even when the signal is both weak and sparse.
 
-sLED can also be used to compare other p-by-p relationship matrices, including correlation matrices and weighted adjacency matrices. 
+sLED can also be used to compare other `p`-by-`p` relationship matrices, including correlation matrices and weighted adjacency matrices. 
 
 
 ## Installation
@@ -36,10 +36,9 @@ library("devtools")
 devtools::install_github("lingxuez/sLED")
 ```
 
-
 ## Examples
 ### Size of sLED
-First, let's try sLED under the null hypothesis. We generate 100 samples from standard Normal distributions with p=100:
+First, let's try sLED under the null hypothesis. We generate 100 samples from standard Normal distributions with `p=100`:
 ```{r}
 n <- 50
 p <- 100
@@ -55,10 +54,10 @@ library("sLED")
 result <- sLED(X=X, Y=Y, npermute=50)
 ```
 
-Let's check the p-value of the test, which hopefully is not too small (since `X` and `Y` are identically distributed):
+Let's check the p-value of sLED, which hopefully is not too small (since `X` and `Y` are identically distributed):
 ```{r}
 result$pVal
-## [1] 0.88
+## [1] 0.86
 ```
 
 ### Power of sLED
@@ -71,7 +70,7 @@ p <- 100
 set.seed(99)
 X <- matrix(rnorm(n*p, mean=0, sd=1), nrow=n, ncol=p)
   
-## For the second population, the first 10 genes have different correlation structure
+## For the second population, the first 10 features have different correlation structure
 s <- 10
 sigma.2 <- diag(p)
 sigma.2[1:s, 1:s] <- sigma.2[1:s, 1:s] + 0.2
@@ -80,57 +79,64 @@ set.seed(42)
 Y2 <- MASS::mvrnorm(n, mu=rep(0, p), Sigma=sigma.2)
 ```
 
-Now we run sLED. Note that the changes in covariance matrices happen at 10% of the genes, so the ideal sparsity parameter `sumabs` should be around (usually slightly less than) `sqrt(0.1)=0.32`. Here, we pick `sumabs=0.25`, and use 100 permutations:
+Now we run sLED. Note that the changes in covariance matrices occur at 10% of the features, so the ideal sparsity parameter `sumabs` should be around (usually slightly less than) `sqrt(0.1)=0.32`. Here, we pick `sumabs=0.25`, and use 100 permutations:
 ```{r}
 ## for reproducibility, let's also set the seeds for permutation
 result <- sLED(X=X, Y=Y2, sumabs.seq=0.25, npermute=100, seeds = c(1:100))
 result$pVal
-## [1] 0
+## [1] 0.03
 ```
-The p-value is near zero. Further more, let's check which genes are detected by sLED, that is, have non-zero leverage:
+The p-value is near zero. Further more, let's check which features are detected by sLED, that is, have non-zero leverage:
 ```{r}
 which(result$leverage != 0)
-## [1]  1  2  4  5  7  8  9 10 30
+## [1]  1  2  3  4  6  7  9 10 16 26 46 50 52 83
 ```
-We see that sLED correctly identifies most of the first 10 signaling genes!
-
+We see that sLED correctly identifies most of the first 10 signaling features!
 We can also run sLED across a range of sparsity parameters `sumabs` at once:
 ```{r}
 ## here we let sumabs.seq to be a vector of 3 different sparsity parameters
 result <- sLED(X=X, Y=Y2, sumabs.seq=c(0.2, 0.25, 0.3), npermute=100, seeds = c(1:100))
                  
-## we can check the 3 p-values, which are all zero
+## we can check the 3 p-values, which are all < 0.05
 result$pVal
-## [1] 0 0 0
+## [1] 0.04 0.03 0.02
 
-## let's also look at which genes have non-zero leverage
+## let's also look at which features have non-zero leverage
 detected.genes <- apply(result$leverage, 1, function(x){which(x!=0)})
 names(detected.genes) <- paste0("sumabs=",result$sumabs.seq)
 detected.genes
 ## $`sumabs=0.2`
-## [1]  2  4  5  7  9 10
-##
+## [1]  2  6  7  9 16 26 50 52
+## 
 ## $`sumabs=0.25`
-## [1]  1  2  4  5  7  8  9 10 30
-##
+## [1]  1  2  3  4  6  7  9 10 16 26 46 50 52 83
+## 
 ## $`sumabs=0.3`
-## [1]  1  2  3  4  5  6  7  8  9 10 20 24 30 39 50 56 60 88 99
+## [1]  1  2  3  4  6  7  9 10 16 18 19 20 26 35 45 46 50 52 60 63 83
 ```
-As shown above, the sLED p-value is usually pretty stable for a reasonable range of sparsity parameters. With larger `sumabs`, the solution becomes denser, i.e. more genes will have non-zero leverage.
+As shown above, the sLED p-value is usually pretty stable for a reasonable range of sparsity parameters. With larger `sumabs`, the solution becomes denser, i.e. more features will have non-zero leverage.
+
+### Sparsity parameter
+
+A key tuning parameter for sLED is the sparsity parameter, `sumabs`. This corresponds to the parameter `c` in equation (2.16) in our paper. Larger values of `sumabs` correspond to denser solutions. Roughly speaking, `sumabs^2` provides a loose lowerbound on the proportion of features to be detected. `sumabs` can take any value between `1/\sqrt{p}` and `1`. In practice, a smaller value is usually preferred for better interpretability.  
+
 
 ## Parallelization
 
-The test can get computationally expensive with large number of permutations. For big data sets, the multi-core version is recommended:
+The test can get computationally expensive with large number of permutations. For larger data sets, the multi-core version is recommended:
 ```{r}
 result_multicore <- sLED(X=X, Y=Y, npermute=1000, useMC=TRUE, mc.cores=2)
 ```
-Please note that you need to have R packages `doParallel` and `parallel` installed.
+Please note that this requires the R packages `doParallel` and `parallel`.
 
 
 ## Simulations
+
 We provide the code to re-produce the simulation results in Section 3 of the paper. Please refer to the R script
 
 > simulations/simulate.R
+
+Note that the simulation can take hours to finish. 
 
 
 ## Tests
