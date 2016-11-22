@@ -80,7 +80,7 @@ if (p >= 100) {
   sumabs.seq <- seq(0.1, 0.3, by=0.02)
 } else {
   ## Note that the parameter $c$ must satisfy
-  ## $c \sqrt{p} >= 1$, so $c=0.1$ is not valid when $p<100$.
+  ## $c \sqrt{p} >= 1$, so $c=0.1$ is not valid when $p < 100$.
   stop("p is too small for c=0.1.")
 }
 
@@ -162,7 +162,7 @@ summary.results <- data.frame(method=names(testing.results),
 print(summary.results)
 
 
-## Evaluate the power of sLED under different smoothing parameter
+## Evaluate the power of sLED under different smoothing parameters
 sLED.powers <- colSums(testing.results$sLED.alt <= level) / nrep
 
 ## visualize

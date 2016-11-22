@@ -116,7 +116,8 @@ detected.genes
 ```
 As shown above, the sLED p-value is usually pretty stable for a reasonable range of sparsity parameters. With larger `sumabs`, the solution becomes denser, i.e. more features will have non-zero leverage.
 
-### Sparsity parameter
+
+## Sparsity parameter
 
 A key tuning parameter for sLED is the sparsity parameter, `sumabs`. This corresponds to the parameter `c` in equation (2.16) in our paper. Larger values of `sumabs` correspond to denser solutions. Roughly speaking, `sumabs^2` provides a loose lowerbound on the proportion of features to be detected. `sumabs` can take any value between `1/\sqrt{p}` and `1`. In practice, a smaller value is usually preferred for better interpretability.  
 
