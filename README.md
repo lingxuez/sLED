@@ -95,7 +95,7 @@ The p-value is near zero. Further more, let's check which features are detected 
 which(result$leverage != 0)
 ## [1]  1  2  3  4  6  7  9 10 16 26 46 50 52 83
 ```
-We see that sLED correctly identifies most of the first 10 signaling features!
+We see that sLED correctly identifies most of the first 10 signaling features.
 We can also run sLED across a range of sparsity parameters `sumabs` at once:
 ```{r}
 ## here we let sumabs.seq to be a vector of 3 different sparsity parameters
@@ -141,7 +141,7 @@ We provide the code to re-produce the simulation results in Section 3 of the pap
 
 > simulations/simulate.R
 
-Note that the simulation can take hours to finish. 
+Note that the simulation can take hours to finish. Multi-core parallelization is highly recommended here.
 
 
 ## Tests
